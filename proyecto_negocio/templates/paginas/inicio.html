@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% comment %} extiende al template base {% endcomment %}
+
+{% comment %}
+    Arreglar toda la parte visual de esta pagina
+{% endcomment %}
+    
+
+{% block titulo %} {% comment %} abre el bloque para titulo {% endcomment %}
+titulo para inicio
+{% endblock %} {% comment %} cierra el bloque para titulo {% endcomment %}
+
+{% block contenido %} {% comment %} abre el bloque para contenido {% endcomment %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Bienvenidos a nuestro negocio</h1>
+        <p class="col-md-8 fs-4">
+            ingresa nuevos productos y servicios
+        </p>
+        <button class="btn btn-primary btn-lg" type="button">
+            Example button
+        </button>
+    </div>
+</div>
+
+{% endblock %} {% comment %} cierra el bloque para contenido {% endcomment %}

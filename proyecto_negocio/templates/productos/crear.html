@@ -9,6 +9,15 @@
 aqui se agrega un nuevo producto
 {% endblock %} {% comment %} cierra el bloque para titulo {% endcomment %}
 
-{% block contenido %} {% comment %} abre el bloque para contenido {% endcomment %}
-aquí va el formulario para agregar un producto
-{% endblock %} {% comment %} cierra el bloque para contenido {% endcomment %}
+{% block contenido %} {% comment %} abre el bloque para contenido (formulario) {% endcomment %}
+
+<div class="card">
+    <div class="card-header">agregar un producto</div>
+    <div class="card-body">
+        <h4 class="card-title">información del producto</h4>
+        {%include 'productos/form.html' %}
+    </div>
+    <div class="card-footer text-muted">Footer</div>
+</div>
+
+{% endblock %} {% comment %} cierra el bloque para contenido  (formulario){% endcomment %}
