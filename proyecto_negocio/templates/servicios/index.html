@@ -41,12 +41,15 @@ Productos
                     </tr>
                 </thead>
                 <tbody>
+                    {% comment %} ciclo for para recorrer los servicios y sus atributos{% endcomment %}
+                        
+                    {% for servicio in servicios %}
                     <tr class="">
-                        <td>1</td>
-                        <td>Item</td>
-                        <td>Item</td>
-                        <td>imagen.jgp</td>
-                        <td>12000</td>
+                        <td>{{ servicio.idservicio }}</td>
+                        <td>{{ servicio.servicio_nombre}}</td>
+                        <td>{{ servicio.servicio_descripcion}}</td>
+                        <td>{{ servicio.servicio_imagen}}</td>
+                        <td>{{ servicio.servicio_precio}}</td>
                         <td> 
                             <a name="editar"
                             id=""
@@ -63,6 +66,7 @@ Productos
                             >borrar</a>
                         </td>
                     </tr>
+                    {% endfor %} {% comment %} cierra el ciclo for {% endcomment %}
                 </tbody>
             </table>
         </div>

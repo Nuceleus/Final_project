@@ -42,13 +42,14 @@ Productos
                     </tr>
                 </thead>
                 <tbody>
+                    {% for producto in productos %} {% comment %} ciclo for, recorre los objetos de la clase productos {% endcomment %}
                     <tr class="">
-                        <td>1</td>
-                        <td>Item</td>
-                        <td>Item</td>
-                        <td>12</td>
-                        <td>imagen.jgp</td>
-                        <td>12000</td>
+                        <td>{{ producto.idproducto }}</td>
+                        <td>{{ producto.producto_nombre }}</td>
+                        <td>{{ producto.producto_descripcion }}</td>
+                        <td>{{ producto.producto_inventario}}</td>
+                        <td>{{ producto.producto_imagen}}</td>
+                        <td>{{ producto.producto_precio}}</td>
                         <td> 
                             <a name="editar"
                             id=""
@@ -65,6 +66,7 @@ Productos
                             >borrar</a>
                         </td>
                     </tr>
+                    {% endfor %} {% comment %} cierra el ciclo for {% endcomment %}
                 </tbody>
             </table>
         </div>

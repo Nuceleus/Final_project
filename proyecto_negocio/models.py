@@ -6,25 +6,32 @@ class Producto(models.Model):
     idproducto = models.AutoField(primary_key=True)
     producto_nombre = models.CharField(max_length=100)
     producto_descripcion = models.TextField()
-    producto_imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
+    producto_imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
     producto_precio= models.PositiveIntegerField()
     producto_inventario = models.PositiveIntegerField()
     
     def __str__(self):
         fila = "descripción: " + self.producto_descripcion
         return fila
+    
+    def delete(self, using=None, keep_parents=False):
+        self.producto_imagen.storage.delete(self.producto_imagen.name)
+        super().delete()
 
 class Servicio(models.Model):
     idservicio = models.AutoField(primary_key=True)
     servicio_nombre = models.CharField(max_length=100)
     servicio_descripcion = models.TextField()
-    servicio_imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
+    servicio_imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
     servicio_precio = models.PositiveIntegerField()
 
     def __str__(self):
         fila = "descripción: " + self.servicio_descripcion
         return fila
-
+    
+    def delete(self, using=None, keep_parents=False):
+        self.servicio_imagen.storage.delete(self.servicio_imagen.name)
+        super().delete()
 
 class Venta(models.Model):
     idventa = models.AutoField(primary_key=True)
