@@ -48,7 +48,7 @@ Productos
                         <td>{{ producto.producto_nombre }}</td>
                         <td>{{ producto.producto_descripcion }}</td>
                         <td>{{ producto.producto_inventario}}</td>
-                        <td>{{ producto.producto_imagen}}</td>
+                        <td><img src="{{ producto.producto_imagen.url}}" width="100" height="100"></td>
                         <td>{{ producto.producto_precio}}</td>
                         <td> 
                             <a name="editar"
@@ -58,12 +58,12 @@ Productos
                             role="button"
                             >editar</a>
                             | 
-                            <a name="borrar"
+                            <a name="eliminar"
                             id=""
                             class="btn btn-danger"
-                            href="#"
+                            href="{% url 'eliminar_producto' producto.idproducto %}"
                             role="button"
-                            >borrar</a>
+                            >eliminar</a>
                         </td>
                     </tr>
                     {% endfor %} {% comment %} cierra el ciclo for {% endcomment %}

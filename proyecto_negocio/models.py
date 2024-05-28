@@ -4,11 +4,11 @@ from django.db import models
 
 class Producto(models.Model):
     idproducto = models.AutoField(primary_key=True)
-    producto_nombre = models.CharField(max_length=100)
-    producto_descripcion = models.TextField()
-    producto_imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
-    producto_precio= models.PositiveIntegerField()
-    producto_inventario = models.PositiveIntegerField()
+    producto_nombre = models.CharField(max_length=100, verbose_name= 'producto')
+    producto_descripcion = models.TextField( verbose_name= 'descripción del producto')
+    producto_imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True, verbose_name= 'imagen')
+    producto_precio= models.PositiveIntegerField(verbose_name= 'precio del producto')
+    producto_inventario = models.PositiveIntegerField(verbose_name= 'inventario')
     
     def __str__(self):
         fila = "descripción: " + self.producto_descripcion
@@ -20,10 +20,10 @@ class Producto(models.Model):
 
 class Servicio(models.Model):
     idservicio = models.AutoField(primary_key=True)
-    servicio_nombre = models.CharField(max_length=100)
-    servicio_descripcion = models.TextField()
-    servicio_imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True)
-    servicio_precio = models.PositiveIntegerField()
+    servicio_nombre = models.CharField(max_length=100, verbose_name= 'servicio')
+    servicio_descripcion = models.TextField(verbose_name='descripción del servicio')
+    servicio_imagen = models.ImageField(upload_to='imagenes/', null=True, blank=True, verbose_name='imagen')
+    servicio_precio = models.PositiveIntegerField(verbose_name= 'precio del servicio')
 
     def __str__(self):
         fila = "descripción: " + self.servicio_descripcion

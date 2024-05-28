@@ -1,19 +1,32 @@
 <form enctype="multipart/form-data" method="post"> {% comment %} comando para crear el formulario {% endcomment %}
-    
 
-<div class="mb-3">
-    <label for="" class="form-label">Nombre</label>
-    <input
-        type="text"
-        class="form-control"
-        name=""
-        id=""
-        aria-describedby="helpId"
-        placeholder="nombre"
-    />
-    <small id="helpId" class="form-text text-muted">Help text</small>
-</div>
+{% csrf_token %} {% comment %} comando para crear el token de seguridad {% endcomment %}
 
+{% for campo in formulario_producto %} {% comment %} comando para crear los campos del formulario {% endcomment %}
+
+    <div class="mb-3">
+        <label for="" class="form-label">{{campo.label}}</label>
+        <input
+            type="{{campo.field.widget.input_type}}"
+            class="form-control"
+            name="{{campo.name}}"
+            id=""
+            aria-describedby="helpId"
+            placeholder="{{campo.label}}"
+        />
+        <small id="helpId" class="form-text text-muted">Help text</small>
+    </div>
+
+    <div class= "col-12 help-text">{{campo.errors}}</div> {% comment %} comando para mostrar los errores {% endcomment %}
+
+
+{%endfor%} {% comment %} comando para cerrar el ciclo for {% endcomment %}
+
+<input name="" 
+id=""
+class="btn btn-primary"
+type="submit"
+value="agregar producto"/> {% comment %} comando para crear el boton de agregar producto {% endcomment %}
 
 </form>{% comment %} comando para cerrar el formulario {% endcomment %}
     

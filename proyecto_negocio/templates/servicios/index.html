@@ -48,7 +48,7 @@ Productos
                         <td>{{ servicio.idservicio }}</td>
                         <td>{{ servicio.servicio_nombre}}</td>
                         <td>{{ servicio.servicio_descripcion}}</td>
-                        <td>{{ servicio.servicio_imagen}}</td>
+                        <td><img src="{{ servicio.servicio_imagen.url }}" width="100px" height="100"></td>
                         <td>{{ servicio.servicio_precio}}</td>
                         <td> 
                             <a name="editar"
@@ -58,12 +58,12 @@ Productos
                             role="button"
                             >editar</a>
                             | 
-                            <a name="borrar"
+                            <a name="eliminar"
                             id=""
                             class="btn btn-danger"
-                            href=""
+                            href="{% url 'eliminar_servicio' servicio.idservicio %}"
                             role="button"
-                            >borrar</a>
+                            >eliminar</a>
                         </td>
                     </tr>
                     {% endfor %} {% comment %} cierra el ciclo for {% endcomment %}

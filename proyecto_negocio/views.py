@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Producto, Servicio, Venta, DetalleVenta, Cliente
+from .models import Producto, Servicio
+from .forms import ProductoForm, ServicioForm
 
 # Create your views here.
 
@@ -22,11 +23,19 @@ def servicios(request):
 
 
 def crear_producto(request):
-    return render(request, "productos/crear.html")
+    formulario_producto = ProductoForm(request.POST or None, request.FILES or None)
+    if formulario_producto.is_valid():
+        formulario_producto.save()
+        return redirect("productos")
+    return render(request, "productos/crear.html", {"formulario_producto": formulario_producto})
 
 
 def crear_servicio(request):
-    return render(request, "servicios/crear.html")
+    formulario_servicio = ServicioForm(request.POST or None, request.FILES or None)
+    if formulario_servicio.is_valid():
+        formulario_servicio.save()
+        return redirect("servicios")
+    return render(request, "servicios/crear.html" , {"formulario_servicio": formulario_servicio})
 
 
 def editar_producto(request):
@@ -35,3 +44,13 @@ def editar_producto(request):
 
 def editar_servicio(request):
     return render(request, "servicios/editar.html")
+
+def eliminar_producto(request, idproducto):
+    producto = Producto.objects.get(idproducto=idproducto)
+    producto.delete()
+    return redirect("productos")
+
+def eliminar_servicio(request, idservicio):
+    servicio = Servicio.objects.get(idservicio=idservicio)
+    servicio.delete()
+    return redirect("servicios")
