@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% comment %} extiende al template base {% endcomment %}
+
+{% comment %}
+    Arreglar toda la parte visual de esta pagina
+{% endcomment %}
+    
+
+{% block titulo %} {% comment %} abre el bloque para titulo {% endcomment %}
+Productos 
+{% endblock %} {% comment %} cierra el bloque para titulo {% endcomment %}
+
+{% block contenido %} {% comment %} abre el bloque para contenido{% endcomment %}
+
+<div class="card">
+    <div class="card-header">
+        <a name=""
+        id=""
+        class="btn btn-primary"
+        href="{% url 'crear_servicio' %}"
+        role="button"
+        >agregar nuevo servicio</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">servicios</h4>
+
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">ID </th>
+                        <th scope="col">servicios </th>
+                        <th scope="col">descripción</th>
+                        <th scope="col">imagen</th> {% comment %} opcional, pero no he tenido éxito cargando imagenes a una base de datos {% endcomment %}
+                        <th scope="col">precio</th>
+                        <th scope="col">acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% comment %} ciclo for para recorrer los servicios y sus atributos{% endcomment %}
+                        
+                    {% for servicio in servicios %}
+                    <tr class="">
+                        <td>{{ servicio.idservicio }}</td>
+                        <td>{{ servicio.servicio_nombre}}</td>
+                        <td>{{ servicio.servicio_descripcion}}</td>
+                        <td><img src="{{ servicio.servicio_imagen.url }}" width="100px" height="100"></td>
+                        <td>{{ servicio.servicio_precio}}</td>
+                        <td> 
+                            <a name="editar"
+                            id=""
+                            class="btn btn-success"
+                            href="{% url 'editar_servicio' %}"
+                            role="button"
+                            >editar</a>
+                            | 
+                            <a name="eliminar"
+                            id=""
+                            class="btn btn-danger"
+                            href="{% url 'eliminar_servicio' servicio.idservicio %}"
+                            role="button"
+                            >eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %} {% comment %} cierra el ciclo for {% endcomment %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="card-footer text-muted">Footer</div>
+</div>
+
+{% endblock %} {% comment %} cierra el bloque para contenido {% endcomment %}
