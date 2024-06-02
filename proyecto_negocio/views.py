@@ -38,19 +38,29 @@ def crear_servicio(request):
     return render(request, "servicios/crear.html" , {"formulario_servicio": formulario_servicio})
 
 
-def editar_producto(request):
-    return render(request, "productos/editar.html")
+def editar_producto(request, idproducto):
+    producto = Producto.objects.get(idproducto=idproducto)
+    formulario_producto = ProductoForm(request.POST or None, request.FILES or None, instance=producto)
+    if formulario_producto.is_valid() and request.POST:
+        formulario_producto.save()
+        return redirect("productos")
+    return render(request, "productos/editar.html", {'formulario_producto':formulario_producto})
 
 
-def editar_servicio(request):
-    return render(request, "servicios/editar.html")
+def editar_servicio(request, idservicio):
+    servicio = Servicio.objects.get(idservicio=idservicio)
+    formulario_servicio = ServicioForm(request.POST or None, request.FILES or None, instance=servicio)
+    if formulario_servicio.is_valid() and request.POST:
+        formulario_servicio.save()
+        return redirect("servicios")
+    return render(request, "servicios/editar.html", {'formulario_servicio':formulario_servicio})
 
-def eliminar_producto(request, idproducto):
+def eliminar_producto(request,idproducto):
     producto = Producto.objects.get(idproducto=idproducto)
     producto.delete()
     return redirect("productos")
 
-def eliminar_servicio(request, idservicio):
+def eliminar_servicio(request,idservicio):
     servicio = Servicio.objects.get(idservicio=idservicio)
     servicio.delete()
     return redirect("servicios")

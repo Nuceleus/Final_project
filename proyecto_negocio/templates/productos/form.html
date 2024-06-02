@@ -6,6 +6,11 @@
 
     <div class="mb-3">
         <label for="" class="form-label">{{campo.label}}</label>
+
+        {% if campo.field.widget.input_type == 'file' and campo.value %} {% comment %} if para mostrar las imagenes en el formulario de editar{% endcomment %}  
+        <br/>
+        <img src="{{MEDIA_URL}}/imagenes/{{campo.value}}" width="100" height="100"/>
+        {%endif%}
         <input
             type="{{campo.field.widget.input_type}}"
             class="form-control"
@@ -13,6 +18,7 @@
             id=""
             aria-describedby="helpId"
             placeholder="{{campo.label}}"
+            value="{{campo.value | default:''}}"
         />
         <small id="helpId" class="form-text text-muted">Help text</small>
     </div>
@@ -24,9 +30,16 @@
 
 <input name="" 
 id=""
-class="btn btn-primary"
+class="btn btn-success"
 type="submit"
-value="agregar producto"/> {% comment %} comando para crear el boton de agregar producto {% endcomment %}
+value="enviar información"/> {% comment %} comando para crear el boton de agregar o editar servicio {% endcomment %}
+
+<a  name=""
+    id=""
+    class="btn btn-danger"
+    href="{%url 'productos'%}"
+    role="button">Cancelar</a>
+
 
 </form>{% comment %} comando para cerrar el formulario {% endcomment %}
     
