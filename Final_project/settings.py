@@ -121,10 +121,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# La URL base para acceder a los archivos estáticos en el navegador
+STATIC_URL = '/static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# Agregar la ruta a la carpeta 'static' dentro de tu proyecto, para que Django pueda encontrar los archivos estáticos
+STATICFILES_DIRS = [
+    BASE_DIR / "proyecto_negocio/static",  # Ruta relativa a la carpeta 'static' en tu proyecto
+]
+
+# Esta configuración solo se usa en producción. Define dónde Django almacenará los archivos estáticos una vez que se ejecuta el comando collectstatic.
+# Si estás en desarrollo, no es necesario configurar STATIC_ROOT, pero en producción es esencial.
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Puedes cambiar el nombre de la carpeta si lo deseas
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/imagenes/'
