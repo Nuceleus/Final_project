@@ -10,5 +10,25 @@ titulo para nosotros
 {% endblock %} {% comment %} cierra el bloque para titulo {% endcomment %}
 
 {% block contenido %} {% comment %} abre el bloque para contenido {% endcomment %}
-contenido para nosotros
+<h1>Bolsa de Trabajo</h1>
+
+<div>
+  <label for="cityFilter">Ciudad:</label>
+  <select id="cityFilter">
+    <option value="">Todas</option>
+    <option value="Madrid">Madrid</option>
+    <option value="Barcelona">Barcelona</option>
+    </select>
+
+  <label for="jobTitleFilter">Cargo:</label>
+  <select id="jobTitleFilter">
+    <option value="">Todos</option>
+    <option value="Desarrollador">Desarrollador</option>
+    <option value="Diseñador">Diseñador</option>
+    </select>
+</div>
+
+<div id="vacancies"></div>
+
+<script src="script.js"></script>
 {% endblock %} {% comment %} cierra el bloque para contenido {% endcomment %}

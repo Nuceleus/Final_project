@@ -1,6 +1,18 @@
 from django.db import models
 
 # Create your models here
+#Agregado por Jose
+class Vacante(models.Model):
+    ciudad = models.CharField(max_length=100)
+    cargo = models.CharField(max_length=100)
+    estudios = models.CharField(max_length=100)
+    salario = models.IntegerField()
+    fecha_publicacion = models.DateField()
+    empresa = models.CharField(max_length=200)
+    # Agrega más campos según tus necesidades
+
+    def __str__(self):
+        return self.cargo
 
 class Producto(models.Model):
     idproducto = models.AutoField(primary_key=True)

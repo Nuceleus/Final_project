@@ -1,9 +1,41 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from django.http import HttpResponse
-from .models import Producto, Servicio
-from .forms import ProductoForm, ServicioForm
+from .models import Producto, Servicio, Vacante
+from .forms import ProductoForm, ServicioForm, VacanteForm
 
 # Create your views here.
+
+#Agregado por Jose
+def eliminar_vacante(request, id):
+    """Elimina la vacante con el ID proporcionado."""
+    if request.method == 'POST':
+        vacante = get_object_or_404(Vacante, id=id)
+        vacante.delete()
+        messages.success(request, 'La vacante ha sido eliminada correctamente.')
+    # Cambia 'nombre_de_tu_vista_principal' por la vista principal, por ejemplo, 'lista_vacantes'
+    return redirect('lista_vacantes')
+
+
+#Agregado por Jose
+def lista_vacantes(request):
+    ciudad = request.GET.get('ciudad')
+    vacantes = Vacante.objects.all()
+
+    if ciudad:
+        vacantes = vacantes.filter(ciudad=ciudad)
+
+    return render(request, 'vacantes/lista.html', {'vacantes': vacantes, 'ciudad': ciudad})
+
+def agregar_vacante(request):
+    if request.method == 'POST':
+        form = VacanteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_vacantes')  # Redirige a la lista de vacantes
+    else:
+        form = VacanteForm()
+    return render(request, 'vacantes/agregar_vacante.html', {'form': form})
 
 def inicio(request):
     return render(request, "paginas/inicio.html")
