@@ -9,48 +9,120 @@
 Inicio
 {% endblock %} {% comment %} cierra el bloque para titulo {% endcomment %}
 
+
+
 {% block contenido %} {% comment %} abre el bloque para contenido {% endcomment %}
-    <h1>Listado de Vacantes Activas</h1>
-    <a href="{% url 'agregar_vacante' %}">Agregar Vacante</a>
-    <form method="get">
-        <label for="ciudad">Ciudad:</label>
-        <input type="text" name="ciudad" id="ciudad" value="{{ ciudad }}">
-        <button type="submit">Filtrar</button>
-        <br><br>
-    </form>
-    
 
 
 
-    <div class="card-container">
-        {% for vacante in vacantes %}          
-        <div class="card" style="width: 18rem; opacity: 90%;">            
-            <div class="card-body">
-                <h5 class="card-title">{{ vacante.cargo }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">👥Numero de Vacantes {{ vacante.numero_puestos }}</h6>
-                <h6 class="card-subtitle mb-2 text-muted">🏙️ Ciudad: {{ vacante.ciudad }}</h6>
-                <h6 class="card-subtitle mb-2 text-muted">⌛Experiencia: {{ vacante.tiempo_experiencia }}</h6>
-                <h6 class="card-subtitle mb-2 text-muted">👨‍🎓 {{ vacante.nivel_estudios }}</h6>
-                <h6 class="card-subtitle mb-2 text-muted">🏠🏢Modalidad: {{ vacante.modalidad_trabajo }}</h6>
-                <h6 class="card-subtitle mb-2 text-muted">💵Rango Salarial: {{ vacante.rango_salarial }}</h6>                
-                <!-- Botón de eliminar -->
+
+
+
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Contenido principal que se ajusta al resto de la pantalla -->
+        <div class="col py-3">
+            <h1>Listado de Vacantes Activas</h1>
+            <br>
+            <button type="button" class="btn btn-outline-secondary btn-lg" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" >Filtrar Vacantes</button>
+            <a class="btn btn-outline-success btn-lg"  href="{% url 'agregar_vacante' %}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Agregar Vacante
+            </a>
+            <br><br>
+            <div class="card-container">
+                {% for vacante in vacantes %}
+                <div class="card" style="width: 18rem; opacity: 90%;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ vacante.cargo }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">👥Numero de Vacantes {{ vacante.numero_puestos }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">🏙️ Ciudad: {{ vacante.ciudad }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">⌛Experiencia: {{ vacante.tiempo_experiencia }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">👨‍🎓 {{ vacante.nivel_estudios }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">🏠🏢Modalidad: {{ vacante.modalidad_trabajo }}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">💵Rango Salarial: {{ vacante.rango_salarial }}</h6>
+                        <p class="d-inline-flex gap-1">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                              Button with data-bs-target
+                            </button>
+                          </p>
+                          <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                {{ vacante.descripcion_vacante }} <br> 
+                                Contrato: {{ vacante.tipo_contrato }} <br>
+                                Jornada: {{ vacante.jornada_trabajo }} <br>
+                                Codigo SISE: {{ vacante.codigo_vacante }}
+
+                            </div>
+                          </div>
+                        <br>
+                        <form method="POST" action="{% url 'eliminar_vacante' vacante.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
                 <br>
-                <form method="POST" action="{% url 'eliminar_vacante' vacante.id %}" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger mt-2">Eliminar</button>
-                </form>
+                {% endfor %}
             </div>
         </div>
-        <br>
-        
-        {% endfor %}
     </div>
+</div>
 
-
-
-
-
-
+  
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filtrar Vacantes</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <form action="" method="GET">
+          <div class="mb-3">
+              <label for="cargo" class="form-label">Cargo</label>
+              <input type="text" name="cargo" id="cargo" class="form-control" value="{{ request.GET.cargo }}">
+          </div>
+          <div class="mb-3">
+              <label for="area" class="form-label">Área</label>
+              <input type="text" name="area" id="area" class="form-control" value="{{ request.GET.area }}">
+          </div>
+          <div class="mb-3">
+              <label for="modalidad_trabajo" class="form-label">Modalidad de Trabajo</label>
+              <input type="text" name="modalidad_trabajo" id="modalidad_trabajo" class="form-control" value="{{ request.GET.modalidad_trabajo }}">
+          </div>
+          <div class="mb-3">
+              <label for="tipo_contrato" class="form-label">Tipo de Contrato</label>
+              <input type="text" name="tipo_contrato" id="tipo_contrato" class="form-control" value="{{ request.GET.tipo_contrato }}">
+          </div>
+          <div class="mb-3">
+              <label for="jornada_trabajo" class="form-label">Jornada de Trabajo</label>
+              <input type="text" name="jornada_trabajo" id="jornada_trabajo" class="form-control" value="{{ request.GET.jornada_trabajo }}">
+          </div>
+          <div class="mb-3">
+              <label for="tiempo_experiencia" class="form-label">Tiempo de Experiencia</label>
+              <input type="text" name="tiempo_experiencia" id="tiempo_experiencia" class="form-control" value="{{ request.GET.tiempo_experiencia }}">
+          </div>
+          <div class="mb-3">
+              <label for="nivel_estudios" class="form-label">Nivel de Estudios</label>
+              <input type="text" name="nivel_estudios" id="nivel_estudios" class="form-control" value="{{ request.GET.nivel_estudios }}">
+          </div>
+          <div class="mb-3">
+              <label for="departamento" class="form-label">Departamento</label>
+              <input type="text" name="departamento" id="departamento" class="form-control" value="{{ request.GET.departamento }}">
+          </div>
+          <div class="mb-3">
+              <label for="ciudad" class="form-label">Ciudad</label>
+              <input type="text" name="ciudad" id="ciudad" class="form-control" value="{{ request.GET.ciudad }}">
+          </div>
+          <div class="mb-3">
+              <label for="rango_salarial" class="form-label">Rango Salarial</label>
+              <input type="text" name="rango_salarial" id="rango_salarial" class="form-control" value="{{ request.GET.rango_salarial }}">
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 {% endblock %} {% comment %} cierra el bloque para contenido {% endcomment %}
