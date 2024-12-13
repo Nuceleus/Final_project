@@ -19,6 +19,15 @@ Inicio
         <br><br>
     </form>
     
+    <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+        <div class="icon flex-shrink-0"><i class="bi bi-briefcase" style="color: #f57813;"></i></div>
+        <div>
+          <h4 class="title">{{ vacante.cargo }}</h4>
+          <p class="description">{{ vacante.descripcion_vacante }}</p>
+          <a href="#" class="readmore stretched-link"><span>{{ vacante.descripcion_vacante }}</span><i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+
 
     <div class="card-container">
         {% for vacante in vacantes %}
