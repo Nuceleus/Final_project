@@ -19,26 +19,20 @@ Inicio
         <br><br>
     </form>
     
-    <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
-        <div class="icon flex-shrink-0"><i class="bi bi-briefcase" style="color: #f57813;"></i></div>
-        <div>
-          <h4 class="title">{{ vacante.cargo }}</h4>
-          <p class="description">{{ vacante.descripcion_vacante }}</p>
-          <a href="#" class="readmore stretched-link"><span>{{ vacante.descripcion_vacante }}</span><i class="bi bi-arrow-right"></i></a>
-        </div>
-      </div>
+
 
 
     <div class="card-container">
-        {% for vacante in vacantes %}
-        <div class="card" style="width: 18rem; opacity: 90%;">
+        {% for vacante in vacantes %}          
+        <div class="card" style="width: 18rem; opacity: 90%;">            
             <div class="card-body">
                 <h5 class="card-title">{{ vacante.cargo }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ vacante.codigo_vacante }}</h6>
-                <p class="card-text">{{ vacante.area }}</p>
-                <a href="#" class="card-link">{{ vacante.numero_puestos }}</a>
-                <a href="#" class="card-link">{{ vacante.modalidad_trabajo }}</a>
-                
+                <h6 class="card-subtitle mb-2 text-muted">👥Numero de Vacantes {{ vacante.numero_puestos }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">🏙️ Ciudad: {{ vacante.ciudad }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">⌛Experiencia: {{ vacante.tiempo_experiencia }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">👨‍🎓 {{ vacante.nivel_estudios }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">🏠🏢Modalidad: {{ vacante.modalidad_trabajo }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">💵Rango Salarial: {{ vacante.rango_salarial }}</h6>                
                 <!-- Botón de eliminar -->
                 <br>
                 <form method="POST" action="{% url 'eliminar_vacante' vacante.id %}" style="display: inline;">
