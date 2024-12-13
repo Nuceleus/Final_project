@@ -6,6 +6,34 @@ from .forms import ProductoForm, ServicioForm, VacanteForm
 
 # Create your views here.
 
+# Archivo de migración: 0005_clean_numero_puestos.py
+
+from django.db import migrations
+
+def limpiar_numero_puestos(apps, schema_editor):
+    Vacante = apps.get_model('proyecto_negocio', 'Vacante')
+    # Convertir los valores de 'n/a' a 0
+    Vacante.objects.filter(numero_puestos='n/a').update(numero_puestos=0)
+    # Convertir los valores no numéricos en 0
+    for vacante in Vacante.objects.all():
+        try:
+            vacante.numero_puestos = int(vacante.numero_puestos)
+            vacante.save()
+        except ValueError:
+            vacante.numero_puestos = 0
+            vacante.save()
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('proyecto_negocio', '0004_remove_vacante_empresa_remove_vacante_estudios_and_more'),
+    ]
+
+    operations = [
+        migrations.RunPython(limpiar_numero_puestos),
+    ]
+
+
 #Agregado por Jose
 def eliminar_vacante(request, id):
     """Elimina la vacante con el ID proporcionado."""
@@ -15,6 +43,7 @@ def eliminar_vacante(request, id):
         messages.success(request, 'La vacante ha sido eliminada correctamente.')
     # Cambia 'nombre_de_tu_vista_principal' por la vista principal, por ejemplo, 'lista_vacantes'
     return redirect('lista_vacantes')
+
 
 
 #Agregado por Jose
