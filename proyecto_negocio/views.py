@@ -4,6 +4,88 @@ from django.http import HttpResponse
 from .models import Producto, Servicio, Vacante
 from .forms import ProductoForm, ServicioForm, VacanteForm
 
+#Agregado por Jose
+
+from django.db.models import Q
+import unicodedata
+
+def normalizar_texto(texto):
+    """
+    Elimina los acentos y normaliza el texto a minúsculas.
+    """
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', texto)
+        if unicodedata.category(c) != 'Mn'
+    ).lower()
+
+def lista_vacantes(request):
+    # Obtener los filtros de la solicitud GET
+    cargo = request.GET.get('cargo')
+    area = request.GET.get('area')
+    modalidad_trabajo = request.GET.get('modalidad_trabajo')
+    tipo_contrato = request.GET.get('tipo_contrato')
+    jornada_trabajo = request.GET.get('jornada_trabajo')
+    tiempo_experiencia = request.GET.get('tiempo_experiencia')
+    nivel_estudios = request.GET.get('nivel_estudios')
+    departamento = request.GET.get('departamento')
+    ciudad = request.GET.get('ciudad')
+    rango_salarial = request.GET.get('rango_salarial')
+
+    # Obtener todas las vacantes
+    vacantes = Vacante.objects.all()
+
+    # Filtrar por cargo (ignorando tildes y mayúsculas/minúsculas)
+    if cargo:
+        palabras_clave = cargo.split()
+        consulta_cargo = Q()
+        for palabra in palabras_clave:
+            palabra_normalizada = normalizar_texto(palabra)
+            consulta_cargo |= Q(cargo__icontains=palabra_normalizada)
+
+        # Filtrar manualmente en Python porque SQLite no soporta unaccent
+        vacantes = [v for v in vacantes if all(
+            normalizar_texto(palabra) in normalizar_texto(v.cargo) for palabra in palabras_clave
+        )]
+
+    if area:
+        vacantes = vacantes.filter(area=area)
+    if modalidad_trabajo:
+        vacantes = vacantes.filter(modalidad_trabajo=modalidad_trabajo)
+    if tipo_contrato:
+        vacantes = vacantes.filter(tipo_contrato=tipo_contrato)
+    if jornada_trabajo:
+        vacantes = vacantes.filter(jornada_trabajo=jornada_trabajo)
+    if tiempo_experiencia:
+        vacantes = vacantes.filter(tiempo_experiencia=tiempo_experiencia)
+    if nivel_estudios:
+        vacantes = vacantes.filter(nivel_estudios=nivel_estudios)
+    if departamento:
+        vacantes = vacantes.filter(departamento=departamento)
+    if ciudad:
+        vacantes = vacantes.filter(ciudad=ciudad)
+    if rango_salarial:
+        vacantes = vacantes.filter(rango_salarial=rango_salarial)
+
+    # Renderizar la plantilla con las vacantes filtradas y los filtros aplicados
+    contexto = {
+        'vacantes': vacantes,
+        'filtros': {
+            'cargo': cargo,
+            'area': area,
+            'modalidad_trabajo': modalidad_trabajo,
+            'tipo_contrato': tipo_contrato,
+            'jornada_trabajo': jornada_trabajo,
+            'tiempo_experiencia': tiempo_experiencia,
+            'nivel_estudios': nivel_estudios,
+            'departamento': departamento,
+            'ciudad': ciudad,
+            'rango_salarial': rango_salarial,
+        }
+    }
+
+    return render(request, 'vacantes/lista.html', contexto)
+
+
 # Create your views here.
 
 # Archivo de migración: 0005_clean_numero_puestos.py
@@ -46,63 +128,7 @@ def eliminar_vacante(request, id):
 
 
 
-#Agregado por Jose
-def lista_vacantes(request):
-    # Obtener los filtros de la solicitud GET
-    cargo = request.GET.get('cargo')
-    area = request.GET.get('area')
-    modalidad_trabajo = request.GET.get('modalidad_trabajo')
-    tipo_contrato = request.GET.get('tipo_contrato')
-    jornada_trabajo = request.GET.get('jornada_trabajo')
-    tiempo_experiencia = request.GET.get('tiempo_experiencia')
-    nivel_estudios = request.GET.get('nivel_estudios')
-    departamento = request.GET.get('departamento')
-    ciudad = request.GET.get('ciudad')
-    rango_salarial = request.GET.get('rango_salarial')
 
-    # Obtener todas las vacantes
-    vacantes = Vacante.objects.all()
-
-    # Aplicar los filtros solo si tienen valores válidos (no vacíos)
-    if cargo:
-        vacantes = vacantes.filter(cargo=cargo)
-    if area:
-        vacantes = vacantes.filter(area=area)
-    if modalidad_trabajo:
-        vacantes = vacantes.filter(modalidad_trabajo=modalidad_trabajo)
-    if tipo_contrato:
-        vacantes = vacantes.filter(tipo_contrato=tipo_contrato)
-    if jornada_trabajo:
-        vacantes = vacantes.filter(jornada_trabajo=jornada_trabajo)
-    if tiempo_experiencia:
-        vacantes = vacantes.filter(tiempo_experiencia=tiempo_experiencia)
-    if nivel_estudios:
-        vacantes = vacantes.filter(nivel_estudios=nivel_estudios)
-    if departamento:
-        vacantes = vacantes.filter(departamento=departamento)
-    if ciudad:
-        vacantes = vacantes.filter(ciudad=ciudad)
-    if rango_salarial:
-        vacantes = vacantes.filter(rango_salarial=rango_salarial)
-
-    # Renderizar la plantilla con las vacantes filtradas y los filtros aplicados
-    contexto = {
-        'vacantes': vacantes,
-        'filtros': {
-            'cargo': cargo,
-            'area': area,
-            'modalidad_trabajo': modalidad_trabajo,
-            'tipo_contrato': tipo_contrato,
-            'jornada_trabajo': jornada_trabajo,
-            'tiempo_experiencia': tiempo_experiencia,
-            'nivel_estudios': nivel_estudios,
-            'departamento': departamento,
-            'ciudad': ciudad,
-            'rango_salarial': rango_salarial,
-        }
-    }
-    
-    return render(request, 'vacantes/lista.html', contexto)
 
 
 def agregar_vacante(request):
