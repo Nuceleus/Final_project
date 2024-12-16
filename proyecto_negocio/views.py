@@ -200,3 +200,5 @@ def eliminar_servicio(request,idservicio):
     servicio = Servicio.objects.get(idservicio=idservicio)
     servicio.delete()
     return redirect("servicios")
+
+
