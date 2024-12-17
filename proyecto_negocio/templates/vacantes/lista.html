@@ -20,11 +20,11 @@ Inicio
         <div class="col py-3">
             <h1 style="color: #f8d047;">Listado de Vacantes Activas</h1>
             <form action="">
-                <button type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filtrar Vacantes</button>
-                <button type="submit" class="btn btn-warning" onclick="clearFilters()">Borrar Filtros</button>
-                <a class="btn btn-warning" href="{% url 'agregar_vacante' %}" role="button">Agregar Vacante</a>
+                <button type="button" class="btn btn-outline-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filtrar Vacantes</button>
+                <button type="submit" class="btn btn-outline-warning" onclick="clearFilters()">Borrar Filtros</button>
+                <a class="btn btn-outline-warning" href="{% url 'agregar_vacante' %}" role="button">Agregar Vacante</a>
             </form>
-            <br><br>
+            <br>
             <div class="accordion" id="accordionExample" style="background-color: #333333; border-radius: 8px;">
                 {% for vacante in vacantes %}
                 <div class="accordion-item" style="background-color: #222222; border: 1px solid #444444;">
