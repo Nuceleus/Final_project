@@ -201,4 +201,13 @@ def eliminar_servicio(request,idservicio):
     servicio.delete()
     return redirect("servicios")
 
-
+def editar_vacante(request, id):
+    vacante = get_object_or_404(Vacante, id=id)
+    if request.method == 'POST':
+        form = VacanteForm(request.POST, instance=vacante)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_vacantes')
+    else:
+        form = VacanteForm(instance=vacante)
+    return render(request, 'vacantes/editar_vacante.html', {'form': form, 'vacante': vacante})

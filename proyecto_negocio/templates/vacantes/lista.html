@@ -14,17 +14,15 @@ Inicio
 {% block contenido %} {% comment %} abre el bloque para contenido {% endcomment %}
 
 
-<div class="container-fluid" style="opacity: 90%; background-color: #121212; color: #f1f1f1;">
+<div class="container-fluid" style="opacity: 90%; background-color: #525252; color: #f1f1f1;">
     <div class="row flex-nowrap">
         <!-- Contenido principal que se ajusta al resto de la pantalla -->
         <div class="col py-3">
             <h1 style="color: #f8d047;">Listado de Vacantes Activas</h1>
             <form action="">
-                <button type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" >Filtrar Vacantes</button>
-                <button type="submit" class="btn btn-warning" action="" method="GET" onclick="clearFilters()">Borrar Filtros</button>
-                <a class="btn btn-warning" href="{% url 'agregar_vacante' %}" role="button" aria-expanded="false" aria-controls="collapseExample" style="border-color: #000000; color: #000000;">
-                    Agregar Vacante
-                </a>
+                <button type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Filtrar Vacantes</button>
+                <button type="submit" class="btn btn-warning" onclick="clearFilters()">Borrar Filtros</button>
+                <a class="btn btn-warning" href="{% url 'agregar_vacante' %}" role="button">Agregar Vacante</a>
             </form>
             <br><br>
             <div class="accordion" id="accordionExample" style="background-color: #333333; border-radius: 8px;">
@@ -32,18 +30,15 @@ Inicio
                 <div class="accordion-item" style="background-color: #222222; border: 1px solid #444444;">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ vacante.id }}" aria-expanded="false" aria-controls="collapse-{{ vacante.id }}" style="background-color: #333333; color: #f1f1f1; border: none;">
-                            <h5>
-                                <small style="text-transform: uppercase;">• {{ vacante.cargo }} - {{ vacante.ciudad }}</small>
-                            </h5>
+                            <h5><small style="text-transform: uppercase;">• {{ vacante.cargo }} - {{ vacante.ciudad }}</small></h5>
                         </button>
                         <div style="margin: 0.3cm;">
                             <h6 style="text-align: center; color: #bbb;">
-                                <small style="text-transform: uppercase;">👥 Numero de Vacantes {{ vacante.numero_puestos }}</small>
-                                <small style="text-transform: uppercase;">⌛ Experiencia: {{ vacante.tiempo_experiencia }}</small>
-                                <small style="text-transform: uppercase;">👨‍🎓 {{ vacante.nivel_estudios }}</small>
-                                <br>
-                                <small style="text-transform: uppercase;">🏠🏢 Modalidad: {{ vacante.modalidad_trabajo }}</small>
-                                <small style="text-transform: uppercase;">💵 Rango Salarial: {{ vacante.rango_salarial }}</small>
+                                <small>👥 Numero de Vacantes {{ vacante.numero_puestos }}</small>
+                                <small>⌛ Experiencia: {{ vacante.tiempo_experiencia }}</small>
+                                <small>👨‍🎓 {{ vacante.nivel_estudios }}</small><br>
+                                <small>🏠🏢 Modalidad: {{ vacante.modalidad_trabajo }}</small>
+                                <small>💵 Rango Salarial: {{ vacante.rango_salarial }}</small>
                             </h6>
                         </div>
                     </h2>
@@ -51,6 +46,7 @@ Inicio
                         <div class="accordion-body" style="background-color: #282828; color: #f1f1f1;">
                             <strong>{{ vacante.cargo }}</strong>
                             <p>{{ vacante.descripcion_vacante }}</p>
+                            <a href="{% url 'editar_vacante' vacante.id %}" class="btn btn-primary">Editar Vacante</a>
                         </div>
                     </div>
                 </div>
