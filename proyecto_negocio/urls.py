@@ -19,7 +19,7 @@ urlpatterns = [
     path('eliminar_servicio/<int:idservicio>', views.eliminar_servicio, name='eliminar_servicio'),
     path('lista_vacantes/', views.lista_vacantes, name='lista_vacantes'), #agregado por Jose
     path('agregar/', views.agregar_vacante, name='agregar_vacante'), #agregado por Jose
-    path('eliminar-vacante/<int:id>/', views.eliminar_vacante, name='eliminar_vacante'), #agregado por Jose
+    path('eliminar_vacante/<int:id>/', views.eliminar_vacante, name='eliminar_vacante'),
     path('editar_vacante/<int:id>/', views.editar_vacante, name='editar_vacante'),
 
 

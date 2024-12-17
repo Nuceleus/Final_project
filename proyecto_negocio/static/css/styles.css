@@ -1,4 +1,7 @@
-
+.container-button {
+  display: flex;
+  justify-content: flex-end;
+}
 
 .bg {
     animation:slide 3s ease-in-out infinite alternate;
