@@ -18,7 +18,3 @@ class ServicioForm(forms.ModelForm):
         model = Servicio
         fields = '__all__'
         
-class VacanteForm(forms.ModelForm):
-    class Meta:
-        model = Vacante
-        fields = ['cargo', 'ciudad', 'numero_puestos', 'tiempo_experiencia', 'nivel_estudios', 'modalidad_trabajo', 'rango_salarial', 'descripcion_vacante']
